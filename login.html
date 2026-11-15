@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng Nhập & Đăng Ký | MindX Cinema - High-Tech Edition</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons 6.5.1 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    /* ================= 1. BẢNG MÀU "SÁNG XANH CÔNG NGHỆ CAO" & RESET ================= */
+    :root {
+      /* Màu nền toàn trang */
+      --bg-gradient: linear-gradient(135deg, #EBF5FF 0%, #E6F7FA 50%, #EEF2FF 100%);
+      
+      /* Khung Glassmorphism */
+      --card-glass: rgba(255, 255, 255, 0.88);
+      --card-border: #BAE6FD;
+      --card-shadow: 0 20px 45px rgba(14, 116, 144, 0.12);
+
+      /* Màu chữ */
+      --text-main: #0B1F3A;         /* Xanh Navy đậm */
+      --text-sub: #475569;          /* Xám xanh dịu */
+      --text-light: #94A3B8;        /* Xám nhạt */
+
+      /* Màu nhấn công nghệ: Xanh Dương Hoàng Gia sang Xanh Ngọc Cyan */
+      --tech-blue: #1D63ED;
+      --tech-cyan: #06B6D4;
+      --tech-gradient: linear-gradient(135deg, #1D63ED 0%, #06B6D4 100%);
+      --tech-glow: 0 8px 24px rgba(29, 99, 237, 0.35);
+      --tech-glow-hover: 0 12px 30px rgba(6, 182, 212, 0.45);
+
+      /* Ô nhập liệu */
+      --input-bg: #F8FAFC;
+      --input-border: #CBD5E1;
+      --input-focus-border: #1D63ED;
+      --input-focus-ring: rgba(29, 99, 237, 0.12);
+
+      /* Bo góc & Hiệu ứng */
+      --radius-sm: 10px;
+      --radius-md: 14px;
+      --radius-lg: 24px;
+      --radius-pill: 100px;
+      --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow-x: hidden;
+      padding: 30px 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Họa tiết lưới chấm mờ công nghệ cao (Tech Dot Grid) */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(rgba(6, 182, 212, 0.2) 1.2px, transparent 1.2px);
+      background-size: 24px 24px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Các khối cầu ánh sáng xanh chuyển động ở nền */
+    .ambient-glow-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.55;
+      animation: floatMotion 12s infinite alternate ease-in-out;
+    }
+
+    .orb-cyan {
+      width: 420px;
+      height: 420px;
+      background: radial-gradient(circle, #38BDF8, #06B6D4);
+      top: -120px;
+      right: -80px;
+    }
+
+    .orb-blue {
+      width: 460px;
+      height: 460px;
+      background: radial-gradient(circle, #60A5FA, #3B82F6);
+      bottom: -140px;
+      left: -100px;
+      animation-delay: -5s;
+    }
+
+    @keyframes floatMotion {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-30px, 40px) scale(1.08); }
+      100% { transform: translate(40px, -20px) scale(0.95); }
+    }
+
+    /* ================= 2. TOP BAR & BACK BUTTON ================= */
+    .top-bar-nav {
+      position: absolute;
+      top: 24px;
+      left: 28px;
+      right: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .back-home-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 700;
+      padding: 9px 20px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-pill);
+      box-shadow: 0 4px 14px rgba(14, 116, 144, 0.08);
+      backdrop-filter: blur(10px);
+      transition: var(--transition);
+    }
+
+    .back-home-btn:hover {
+      color: var(--tech-blue);
+      border-color: var(--tech-cyan);
+      transform: translateX(-3px);
+      box-shadow: 0 6px 18px rgba(6, 182, 212, 0.25);
+    }
+
+    /* ================= 3. MAIN GLASS CARD ================= */
+    .auth-container-box {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 480px;
+      margin-top: 50px;
+    }
+
+    .auth-card-glass {
+      background: var(--card-glass);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 40px 36px;
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .auth-card-glass:hover {
+      box-shadow: 0 24px 50px rgba(14, 116, 144, 0.18);
+    }
+
+    /* Tia sáng phản chiếu góc thẻ */
+    .auth-card-glass::after {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.2) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    /* Brand Header */
+    .brand-header-group {
+      text-align: center;
+      margin-bottom: 26px;
+    }
+
+    .brand-logo-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--text-main);
+      letter-spacing: -0.3px;
+      margin-bottom: 6px;
+    }
+
+    .brand-logo-icon {
+      width: 38px;
+      height: 38px;
+      background: var(--tech-gradient);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      color: #FFFFFF;
+      box-shadow: var(--tech-glow);
+    }
+
+    .brand-logo-link span span {
+      background: var(--tech-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-tagline-text {
+      font-size: 13.5px;
+      color: var(--text-sub);
+      font-weight: 500;
+    }
+
+    /* ================= 4. SLIDING TABS SWITCHER ================= */
+    .tab-nav-switcher {
+      position: relative;
+      display: flex;
+      background: #E0F2FE;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-pill);
+      padding: 5px;
+      margin-bottom: 28px;
+    }
+
+    .tab-action-btn {
+      flex: 1;
+      padding: 10px 0;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-sub);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 2;
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .tab-action-btn.active {
+      color: #FFFFFF;
+    }
+
+    .sliding-pill-indicator {
+      position: absolute;
+      top: 5px;
+      bottom: 5px;
+      left: 5px;
+      width: calc(50% - 5px);
+      background: var(--tech-gradient);
+      border-radius: var(--radius-pill);
+      box-shadow: var(--tech-glow);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1;
+    }
+
+    /* ================= 5. FORM VIEWS & ANIMATION ================= */
+    .forms-viewport {
+      position: relative;
+    }
+
+    .auth-form-card {
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .auth-form-card.hidden-form {
+      display: none;
+      opacity: 0;
+      transform: translateY(12px);
+    }
+
+    .auth-form-card.active-form {
+      display: block;
+      animation: fadeInSlide 0.4s forwards cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes fadeInSlide {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Input Groups */
+    .field-input-group {
+      margin-bottom: 18px;
+      position: relative;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 7px;
+    }
+
+    .field-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .field-left-icon {
+      position: absolute;
+      left: 16px;
+      color: var(--text-light);
+      font-size: 14px;
+      pointer-events: none;
+      transition: var(--transition);
+    }
+
+    .tech-form-input {
+      width: 100%;
+      height: 48px;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: var(--radius-md);
+      padding: 0 44px 0 44px;
+      color: var(--text-main);
+      font-size: 14px;
+      font-weight: 600;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .tech-form-input::placeholder {
+      color: var(--text-light);
+      font-weight: 500;
+      font-size: 13.5px;
+    }
+
+    .tech-form-input:focus {
+      background: #FFFFFF;
+      border-color: var(--input-focus-border);
+      box-shadow: 0 0 0 4px var(--input-focus-ring);
+    }
+
+    .field-wrapper:focus-within .field-left-icon {
+      color: var(--tech-blue);
+    }
+
+    /* Nút icon con mắt ẩn/hiện mật khẩu */
+    .toggle-pass-btn {
+      position: absolute;
+      right: 14px;
+      background: none;
+      border: none;
+      color: var(--text-light);
+      font-size: 14px;
+      cursor: pointer;
+      padding: 6px;
+      transition: var(--transition);
+    }
+
+    .toggle-pass-btn:hover {
+      color: var(--tech-blue);
+    }
+
+    /* ================= 6. PASSWORD STRENGTH METER ================= */
+    .strength-meter-wrap {
+      margin-top: 8px;
+      margin-bottom: 16px;
+    }
+
+    .strength-bars-flex {
+      display: flex;
+      gap: 5px;
+      height: 4.5px;
+      margin-bottom: 5px;
+    }
+
+    .strength-bar-cell {
+      flex: 1;
+      height: 100%;
+      background: #E2E8F0;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    .strength-caption-row {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-sub);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Form Options (Remember & Forgot) */
+    .options-row-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+      font-size: 13px;
+    }
+
+    .remember-label-checkbox {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      color: var(--text-sub);
+      font-weight: 600;
+      user-select: none;
+    }
+
+    .remember-label-checkbox input[type="checkbox"] {
+      width: 17px;
+      height: 17px;
+      accent-color: var(--tech-blue);
+      cursor: pointer;
+    }
+
+    .forgot-link-anchor {
+      color: var(--tech-blue);
+      text-decoration: none;
+      font-weight: 700;
+      transition: var(--transition);
+    }
+
+    .forgot-link-anchor:hover {
+      color: var(--tech-cyan);
+      text-decoration: underline;
+    }
+
+    /* ================= 7. SUBMIT BUTTON WITH SHINE EFFECT ================= */
+    .tech-submit-btn {
+      width: 100%;
+      height: 50px;
+      background: var(--tech-gradient);
+      border: none;
+      border-radius: var(--radius-md);
+      color: #FFFFFF;
+      font-size: 14.5px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: var(--tech-glow);
+      transition: var(--transition);
+    }
+
+    .tech-submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--tech-glow-hover);
+    }
+
+    /* Ánh sáng lướt qua khi di chuột */
+    .tech-submit-btn::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.45), transparent);
+      transform: rotate(30deg);
+      pointer-events: none;
+      transition: none;
+    }
+
+    .tech-submit-btn:hover::after {
+      left: 120%;
+      transition: all 0.75s ease-in-out;
+    }
+
+    /* Spinner nạp dữ liệu */
+    .submit-btn-spinner {
+      display: none;
+      width: 18px;
+      height: 18px;
+      border: 2.5px solid rgba(255, 255, 255, 0.35);
+      border-top-color: #FFFFFF;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .tech-submit-btn.loading .btn-text-content,
+    .tech-submit-btn.loading i {
+      display: none;
+    }
+
+    .tech-submit-btn.loading .submit-btn-spinner {
+      display: block;
+    }
+
+    .tech-submit-btn:disabled {
+      opacity: 0.8;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* ================= 8. SOCIAL AUTH & DIVIDER ================= */
+    .separator-divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 24px 0;
+      color: var(--text-light);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+
+    .separator-divider::before,
+    .separator-divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .separator-divider span {
+      padding: 0 12px;
+    }
+
+    .social-auth-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .social-auth-chip {
+      height: 44px;
+      background: #FFFFFF;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      color: var(--text-main);
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 2px 6px rgba(14, 116, 144, 0.04);
+      transition: var(--transition);
+    }
+
+    .social-auth-chip:hover {
+      background: #F0F9FF;
+      border-color: var(--tech-cyan);
+      transform: translateY(-1.5px);
+    }
+
+    .social-auth-chip i.fa-google { color: #EA4335; }
+    .social-auth-chip i.fa-facebook { color: #1877F2; }
+
+    /* ================= 9. TOAST NOTIFICATION (LIGHT THEME) ================= */
+    #toast-container {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      pointer-events: none;
+    }
+
+    .toast-box {
+      pointer-events: auto;
+      min-width: 320px;
+      max-width: 400px;
+      background: #FFFFFF;
+      border-left: 4px solid var(--tech-cyan);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 12px 32px rgba(14, 116, 144, 0.16);
+      transform: translateX(120%);
+      transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .toast-box.show {
+      transform: translateX(0);
+    }
+
+    .toast-box.toast-success {
+      border-left-color: #10B981;
+    }
+    .toast-box.toast-success .toast-symbol {
+      color: #10B981;
+    }
+
+    .toast-box.toast-error {
+      border-left-color: #EF4444;
+    }
+    .toast-box.toast-error .toast-symbol {
+      color: #EF4444;
+    }
+
+    .toast-box.toast-info {
+      border-left-color: var(--tech-blue);
+    }
+    .toast-box.toast-info .toast-symbol {
+      color: var(--tech-blue);
+    }
+
+    .toast-symbol {
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .toast-body-text {
+      flex: 1;
+    }
+
+    .toast-heading {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 2px;
+    }
+
+    .toast-desc {
+      font-size: 12px;
+      color: var(--text-sub);
+      line-height: 1.4;
+    }
+
+    /* Footer Copyright */
+    .auth-page-footer {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 12.5px;
+      color: var(--text-sub);
+      font-weight: 500;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .auth-card-glass {
+        padding: 30px 22px;
+        border-radius: 20px;
+      }
+      .top-bar-nav {
+        top: 16px;
+        left: 16px;
+        right: 16px;
+      }
+      #toast-container {
+        left: 16px;
+        right: 16px;
+        top: 16px;
+      }
+      .toast-box {
+        min-width: unset;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Khối Cầu Ánh Sáng Chuyển Động Ở Nền -->
+  <div class="ambient-glow-orb orb-cyan"></div>
+  <div class="ambient-glow-orb orb-blue"></div>
+
+  <!-- Nút Quay Lại Trang Chủ (Góc Trên Bên Trái) -->
+  <div class="top-bar-nav">
+    <a href="index.html" class="back-home-btn">
+      <i class="fa-solid fa-arrow-left"></i>
+      <span>Trang Chủ</span>
+    </a>
+  </div>
+
+  <!-- Hộp Thông Báo Toast Container -->
+  <div id="toast-container"></div>
+
+  <!-- Khung Thẻ Xác Thực Chính (Glassmorphism) -->
+  <main class="auth-container-box">
+    <div class="auth-card-glass">
+      
+      <!-- Brand Logo & Header -->
+      <div class="brand-header-group">
+        <a href="index.html" class="brand-logo-link">
+          <div class="brand-logo-icon">
+            <i class="fa-solid fa-play"></i>
+          </div>
+          <span>MINDX <span>CINEMA</span></span>
+        </a>
+        <p class="brand-tagline-text" id="brandTagline">Cổng trải nghiệm điện ảnh công nghệ cao</p>
+      </div>
+
+      <!-- Thanh Trượt Chuyển Đổi Tab (Login / Register) -->
+      <div class="tab-nav-switcher">
+        <div class="sliding-pill-indicator" id="slidingIndicator"></div>
+        <button type="button" class="tab-action-btn active" id="tabBtnLogin" onclick="switchAuthTab('login')">
+          <i class="fa-solid fa-right-to-bracket"></i> Đăng Nhập
+        </button>
+        <button type="button" class="tab-action-btn" id="tabBtnRegister" onclick="switchAuthTab('register')">
+          <i class="fa-solid fa-user-plus"></i> Đăng Ký
+        </button>
+      </div>
+
+      <div class="forms-viewport">
+
+        <!-- ================= FORM 1: ĐĂNG NHẬP ================= -->
+        <form id="loginForm" class="auth-form-card active-form" novalidate onsubmit="handleLoginSubmit(event)">
+          
+          <!-- Input: Email / Tài khoản -->
+          <div class="field-input-group">
+            <label class="field-label" for="loginIdentifier">Email hoặc Tên tài khoản</label>
+            <div class="field-wrapper">
+              <input type="text" id="loginIdentifier" class="tech-form-input" placeholder="admin@mindx.vn" required autocomplete="username">
+              <i class="fa-regular fa-envelope field-left-icon"></i>
+            </div>
+          </div>
+
+          <!-- Input: Mật khẩu -->
+          <div class="field-input-group">
+            <label class="field-label" for="loginPassword">Mật khẩu</label>
+            <div class="field-wrapper">
+              <input type="password" id="loginPassword" class="tech-form-input" placeholder="••••••••" required autocomplete="current-password">
+              <i class="fa-solid fa-lock field-left-icon"></i>
+              <button type="button" class="toggle-pass-btn" onclick="togglePasswordReveal('loginPassword', this)">
+                <i class="fa-regular fa-eye-slash"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Tùy chọn: Ghi nhớ & Quên mật khẩu -->
+          <div class="options-row-flex">
+            <label class="remember-label-checkbox">
+              <input type="checkbox" id="rememberMeCheck">
+              <span>Ghi nhớ đăng nhập</span>
+            </label>
+            <a href="javascript:void(0)" onclick="handleForgotPasswordAlert()" class="forgot-link-anchor">Quên mật khẩu?</a>
+          </div>
+
+          <!-- Nút Đăng Nhập -->
+          <button type="submit" class="tech-submit-btn" id="loginBtnSubmit">
+            <span class="btn-text-content">ĐĂNG NHẬP</span>
+            <i class="fa-solid fa-arrow-right"></i>
+            <div class="submit-btn-spinner"></div>
+          </button>
+
+          <!-- Dòng Ngăn Cách -->
+          <div class="separator-divider">
+            <span>Hoặc tiếp tục với</span>
+          </div>
+
+          <!-- Đăng Nhập Mạng Xã Hội -->
+          <div class="social-auth-grid">
+            <button type="button" class="social-auth-chip" onclick="handleSocialAuthNotice('Google')">
+              <i class="fa-brands fa-google"></i> Google
+            </button>
+            <button type="button" class="social-auth-chip" onclick="handleSocialAuthNotice('Facebook')">
+              <i class="fa-brands fa-facebook"></i> Facebook
+            </button>
+          </div>
+        </form>
+
+        <!-- ================= FORM 2: ĐĂNG KÝ ================= -->
+        <form id="registerForm" class="auth-form-card hidden-form" novalidate onsubmit="handleRegisterSubmit(event)">
+          
+          <!-- Input: Họ và Tên -->
+          <div class="field-input-group">
+            <label class="field-label" for="regFullname">Họ và Tên</label>
+            <div class="field-wrapper">
+              <input type="text" id="regFullname" class="tech-form-input" placeholder="Nguyễn Văn A" required>
+              <i class="fa-regular fa-user field-left-icon"></i>
+            </div>
+          </div>
+
+          <!-- Input: Email -->
+          <div class="field-input-group">
+            <label class="field-label" for="regEmail">Địa chỉ Email</label>
+            <div class="field-wrapper">
+              <input type="email" id="regEmail" class="tech-form-input" placeholder="tenban@example.com" required>
+              <i class="fa-regular fa-envelope field-left-icon"></i>
+            </div>
+          </div>
+
+          <!-- Input: Mật khẩu -->
+          <div class="field-input-group" style="margin-bottom: 6px;">
+            <label class="field-label" for="regPassword">Mật khẩu</label>
+            <div class="field-wrapper">
+              <input type="password" id="regPassword" class="tech-form-input" placeholder="Tối thiểu 6 ký tự" required oninput="evaluatePasswordStrength(this.value)">
+              <i class="fa-solid fa-lock field-left-icon"></i>
+              <button type="button" class="toggle-pass-btn" onclick="togglePasswordReveal('regPassword', this)">
+                <i class="fa-regular fa-eye-slash"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Thanh Đo Độ Mạnh Mật Khẩu -->
+          <div class="strength-meter-wrap">
+            <div class="strength-bars-flex">
+              <div class="strength-bar-cell" id="strBar1"></div>
+              <div class="strength-bar-cell" id="strBar2"></div>
+              <div class="strength-bar-cell" id="strBar3"></div>
+            </div>
+            <div class="strength-caption-row">
+              <span>Độ bảo mật:</span>
+              <span id="strengthTextLabel" style="color: var(--text-light);">Chưa nhập</span>
+            </div>
+          </div>
+
+          <!-- Input: Xác nhận mật khẩu -->
+          <div class="field-input-group">
+            <label class="field-label" for="regConfirmPassword">Xác nhận mật khẩu</label>
+            <div class="field-wrapper">
+              <input type="password" id="regConfirmPassword" class="tech-form-input" placeholder="Nhập lại chính xác mật khẩu" required>
+              <i class="fa-solid fa-shield-halved field-left-icon"></i>
+              <button type="button" class="toggle-pass-btn" onclick="togglePasswordReveal('regConfirmPassword', this)">
+                <i class="fa-regular fa-eye-slash"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Nút Đăng Ký -->
+          <button type="submit" class="tech-submit-btn" id="registerBtnSubmit" style="margin-top: 10px;">
+            <span class="btn-text-content">ĐĂNG KÝ TÀI KHOẢN</span>
+            <i class="fa-solid fa-user-check"></i>
+            <div class="submit-btn-spinner"></div>
+          </button>
+        </form>
+
+      </div>
+
+    </div>
+
+    <!-- Bản Quyền Chân Trang -->
+    <footer class="auth-page-footer">
+      <p>© 2026 MindX Cinema. Giao diện Sáng Xanh Công Nghệ Cao.</p>
+    </footer>
+  </main>
+
+  <!-- ================= 10. JAVASCRIPT LOGIC ================= -->
+  <script>
+    /* ================= KHỞI TẠO TÀI KHOẢN MẪU ================= */
+    const STORAGE_KEY_USERS = 'mindx_users';
+    const STORAGE_KEY_CURRENT_USER = 'mindx_current_user';
+
+    function initDefaultUser() {
+      const users = JSON.parse(localStorage.getItem(STORAGE_KEY_USERS)) || [];
+      const hasDefault = users.some(u => u.email === 'admin@mindx.vn');
+
+      if (!hasDefault) {
+        users.push({
+          fullname: 'Quản Trị Viên',
+          email: 'admin@mindx.vn',
+          password: 'password123',
+          createdAt: new Date().toISOString()
+        });
+        localStorage.setItem(STORAGE_KEY_USERS, JSON.stringify(users));
+      }
+    }
+    initDefaultUser();
+
+    /* ================= TOAST NOTIFICATION SÁNG HIỆN ĐẠI ================= */
+    function showToast(title, message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `toast-box toast-${type}`;
+
+      let iconClass = 'fa-circle-info';
+      if (type === 'success') iconClass = 'fa-circle-check';
+      if (type === 'error') iconClass = 'fa-circle-exclamation';
+
+      toast.innerHTML = `
+        <i class="fa-solid ${iconClass} toast-symbol"></i>
+        <div class="toast-body-text">
+          <div class="toast-heading">${title}</div>
+          <div class="toast-desc">${message}</div>
+        </div>
+      `;
+
+      container.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 10);
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 400);
+      }, 4000);
+    }
+
+    /* ================= CHUYỂN ĐỔI TAB (LOGIN / REGISTER) ================= */
+    const slidingIndicator = document.getElementById('slidingIndicator');
+    const tabBtnLogin = document.getElementById('tabBtnLogin');
+    const tabBtnRegister = document.getElementById('tabBtnRegister');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const brandTagline = document.getElementById('brandTagline');
+
+    function switchAuthTab(mode) {
+      if (mode === 'login') {
+        slidingIndicator.style.transform = 'translateX(0%)';
+        tabBtnLogin.classList.add('active');
+        tabBtnRegister.classList.remove('active');
+
+        loginForm.classList.remove('hidden-form');
+        loginForm.classList.add('active-form');
+
+        registerForm.classList.add('hidden-form');
+        registerForm.classList.remove('active-form');
+
+        brandTagline.innerText = 'Cổng trải nghiệm điện ảnh công nghệ cao';
+      } else {
+        slidingIndicator.style.transform = 'translateX(100%)';
+        tabBtnRegister.classList.add('active');
+        tabBtnLogin.classList.remove('active');
+
+        registerForm.classList.remove('hidden-form');
+        registerForm.classList.add('active-form');
+
+        loginForm.classList.add('hidden-form');
+        loginForm.classList.remove('active-form');
+
+        brandTagline.innerText = 'Đăng ký thành viên nhận ngay đặc quyền xem phim 4K';
+      }
+    }
+
+    /* ================= ẨN / HIỆN MẬT KHẨU ================= */
+    function togglePasswordReveal(inputId, btn) {
+      const input = document.getElementById(inputId);
+      const icon = btn.querySelector('i');
+
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+        icon.style.color = '#1D63ED';
+      } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+        icon.style.color = '';
+      }
+    }
+
+    /* ================= ĐO ĐỘ MẠNH CỦA MẬT KHẨU ================= */
+    function evaluatePasswordStrength(password) {
+      const b1 = document.getElementById('strBar1');
+      const b2 = document.getElementById('strBar2');
+      const b3 = document.getElementById('strBar3');
+      const label = document.getElementById('strengthTextLabel');
+
+      if (!password) {
+        b1.style.backgroundColor = '#E2E8F0';
+        b2.style.backgroundColor = '#E2E8F0';
+        b3.style.backgroundColor = '#E2E8F0';
+        label.innerText = 'Chưa nhập';
+        label.style.color = 'var(--text-light)';
+        return;
+      }
+
+      let score = 0;
+      if (password.length >= 6) score++;
+      if (/[A-Z]/.test(password) && /[0-9]/.test(password)) score++;
+      if (password.length >= 9 && /[^A-Za-z0-9]/.test(password)) score++;
+
+      if (score === 1) {
+        b1.style.backgroundColor = '#EF4444'; // Đỏ (Yếu)
+        b2.style.backgroundColor = '#E2E8F0';
+        b3.style.backgroundColor = '#E2E8F0';
+        label.innerText = 'Mức độ: Yếu';
+        label.style.color = '#EF4444';
+      } else if (score === 2) {
+        b1.style.backgroundColor = '#F59E0B'; // Cam (Vừa)
+        b2.style.backgroundColor = '#F59E0B';
+        b3.style.backgroundColor = '#E2E8F0';
+        label.innerText = 'Mức độ: Trung bình';
+        label.style.color = '#F59E0B';
+      } else {
+        b1.style.backgroundColor = '#06B6D4'; // Xanh Ngọc (Mạnh)
+        b2.style.backgroundColor = '#06B6D4';
+        b3.style.backgroundColor = '#06B6D4';
+        label.innerText = 'Mức độ: Rất an toàn';
+        label.style.color = '#06B6D4';
+      }
+    }
+
+    /* ================= XỬ LÝ ĐĂNG KÝ ================= */
+    function handleRegisterSubmit(e) {
+      e.preventDefault();
+
+      const fullname = document.getElementById('regFullname').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const password = document.getElementById('regPassword').value;
+      const confirmPassword = document.getElementById('regConfirmPassword').value;
+      const submitBtn = document.getElementById('registerBtnSubmit');
+
+      // Validation
+      if (!fullname || !email || !password || !confirmPassword) {
+        showToast('Thiếu thông tin', 'Vui lòng điền đầy đủ tất cả các trường dữ liệu!', 'error');
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showToast('Email không hợp lệ', 'Vui lòng kiểm tra lại cấu trúc địa chỉ email!', 'error');
+        return;
+      }
+
+      if (password.length < 6) {
+        showToast('Mật khẩu quá ngắn', 'Mật khẩu phải chứa ít nhất 6 ký tự để bảo mật!', 'error');
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showToast('Mật khẩu không khớp', 'Mật khẩu xác nhận không trùng với mật khẩu vừa tạo!', 'error');
+        return;
+      }
+
+      const users = JSON.parse(localStorage.getItem(STORAGE_KEY_USERS)) || [];
+      const userExists = users.some(u => u.email.toLowerCase() === email.toLowerCase());
+
+      if (userExists) {
+        showToast('Email đã tồn tại', 'Địa chỉ email này đã được sử dụng trước đó!', 'error');
+        return;
+      }
+
+      // Bật hiệu ứng xoay nạp dữ liệu
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+
+      setTimeout(() => {
+        users.push({
+          fullname: fullname,
+          email: email,
+          password: password,
+          createdAt: new Date().toISOString()
+        });
+        localStorage.setItem(STORAGE_KEY_USERS, JSON.stringify(users));
+
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+
+        showToast('Đăng ký thành công', 'Tài khoản của bạn đã được khởi tạo! Vui lòng đăng nhập.', 'success');
+
+        // Reset form & chuyển về tab Đăng Nhập
+        document.getElementById('registerForm').reset();
+        evaluatePasswordStrength('');
+        document.getElementById('loginIdentifier').value = email;
+        switchAuthTab('login');
+      }, 800);
+    }
+
+    /* ================= XỬ LÝ ĐĂNG NHẬP ================= */
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+
+      const identifier = document.getElementById('loginIdentifier').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      const rememberMe = document.getElementById('rememberMeCheck').checked;
+      const submitBtn = document.getElementById('loginBtnSubmit');
+
+      if (!identifier || !password) {
+        showToast('Chưa nhập đủ', 'Vui lòng nhập email/tên tài khoản và mật khẩu!', 'error');
+        return;
+      }
+
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+
+      setTimeout(() => {
+        const users = JSON.parse(localStorage.getItem(STORAGE_KEY_USERS)) || [];
+        
+        // Tìm tài khoản theo email hoặc họ tên
+        const foundUser = users.find(u => 
+          (u.email.toLowerCase() === identifier.toLowerCase() || u.fullname.toLowerCase() === identifier.toLowerCase()) 
+          && u.password === password
+        );
+
+        if (!foundUser) {
+          submitBtn.classList.remove('loading');
+          submitBtn.disabled = false;
+          showToast('Đăng nhập thất bại', 'Tài khoản hoặc mật khẩu không chính xác!', 'error');
+          return;
+        }
+
+        // Lưu trạng thái đăng nhập vào localStorage (key: mindx_current_user)
+        const sessionData = {
+          fullname: foundUser.fullname,
+          email: foundUser.email,
+          loggedInAt: new Date().toISOString(),
+          rememberMe: rememberMe
+        };
+        localStorage.setItem(STORAGE_KEY_CURRENT_USER, JSON.stringify(sessionData));
+
+        showToast('Đăng nhập thành công', `Chào mừng ${foundUser.fullname} trở lại! Đang chuyển hướng...`, 'success');
+
+        // Tự động chuyển về index.html sau 1.2 giây
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 1200);
+
+      }, 800);
+    }
+
+    /* ================= THÔNG BÁO PHỤ TRỢ ================= */
+    function handleForgotPasswordAlert() {
+      const email = prompt("Vui lòng nhập email để nhận liên kết khôi phục mật khẩu:");
+      if (email) {
+        showToast('Yêu cầu đã gửi', `Mã xác thực đã được gửi tới địa chỉ: ${email}`, 'info');
+      }
+    }
+
+    function handleSocialAuthNotice(provider) {
+      showToast('Đang kết nối', `Đang kết nối cổng xác thực an toàn qua ${provider}...`, 'info');
+      setTimeout(() => {
+        showToast('Phiên bản thử nghiệm', `Tính năng đăng nhập qua ${provider} sẽ sớm ra mắt.`, 'info');
+      }, 1000);
+    }
+  </script>
+
+</body>
+</html>

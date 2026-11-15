@@ -1,0 +1,1686 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chi Tiết Phim | MindX Cinema - High-Tech Edition</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons 6.5.1 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    /* ================= 1. BẢNG MÀU "SÁNG CÔNG NGHỆ CAO" & RESET ================= */
+    :root {
+      /* Nền toàn trang: Xanh ngọc băng chuyển sắc sang Bạc ánh xanh */
+      --bg-gradient: linear-gradient(135deg, #EBF6F8 0%, #EEF2FF 100%);
+      --bg-body: #EBF6F8;
+
+      /* Kính mờ ánh ngọc cho thẻ & khung nội dung */
+      --card-glass: rgba(255, 255, 255, 0.85);
+      --card-border: #BAE6FD;
+      --card-border-hover: #38BDF8;
+      --card-shadow: 0 12px 30px rgba(8, 145, 178, 0.08);
+      --card-shadow-hover: 0 18px 40px rgba(8, 145, 178, 0.16);
+
+      /* Thanh điều hướng Navbar */
+      --nav-glass: rgba(235, 246, 248, 0.88);
+      --nav-border: #BAE6FD;
+
+      /* Màu chữ */
+      --text-main: #082F49;       /* Xanh đen công nghệ */
+      --text-sub: #334155;        /* Xám xanh */
+      --text-light: #64748B;      /* Xám bạc */
+
+      /* Màu nhấn công nghệ: Cyan điện tử & Indigo sâu */
+      --tech-cyan: #06B6D4;
+      --tech-indigo: #4F46E5;
+      --tech-gradient: linear-gradient(135deg, #06B6D4 0%, #4F46E5 100%);
+      --tech-glow: 0 8px 24px rgba(6, 182, 212, 0.35);
+      --tech-glow-hover: 0 12px 32px rgba(79, 70, 229, 0.45);
+
+      /* Điểm nhấn phụ */
+      --accent-gold: #F59E0B;     /* Đánh giá sao */
+      --accent-green: #10B981;    /* Trạng thái Online/HD */
+
+      /* Bo góc & Hiệu ứng */
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 22px;
+      --radius-pill: 100px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      position: relative;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Họa tiết lưới chấm mờ công nghệ cao (Subtle Tech Dot Grid) */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(rgba(6, 182, 212, 0.16) 1.2px, transparent 1.2px);
+      background-size: 26px 26px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 9px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-body);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #7DD3FC;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--tech-cyan);
+    }
+
+    /* ================= 2. NAVBAR (HIGH-TECH GLASS) ================= */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 76px;
+      background: var(--nav-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--nav-border);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      transition: var(--transition);
+    }
+
+    .navbar.scrolled {
+      height: 68px;
+      background: rgba(235, 246, 248, 0.98);
+      box-shadow: 0 8px 24px rgba(8, 145, 178, 0.1);
+    }
+
+    .nav-container {
+      max-width: 1360px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--text-main);
+      letter-spacing: -0.3px;
+      flex-shrink: 0;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      background: var(--tech-gradient);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      color: #FFFFFF;
+      box-shadow: var(--tech-glow);
+    }
+
+    .brand-logo span span {
+      background: var(--tech-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-sub);
+      font-size: 14.5px;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--tech-indigo);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .btn-nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      font-size: 13.5px;
+      font-weight: 600;
+      transition: var(--transition);
+      box-shadow: 0 2px 8px rgba(8, 145, 178, 0.05);
+    }
+
+    .btn-nav-back:hover {
+      background: #FFFFFF;
+      border-color: var(--tech-cyan);
+      transform: translateX(-3px);
+      box-shadow: 0 4px 14px rgba(6, 182, 212, 0.2);
+    }
+
+    /* Auth profile */
+    .auth-state-box {
+      display: flex;
+      align-items: center;
+    }
+
+    .btn-login {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--tech-gradient);
+      color: #FFFFFF;
+      text-decoration: none;
+      padding: 9px 20px;
+      border-radius: var(--radius-pill);
+      font-size: 13.5px;
+      font-weight: 700;
+      box-shadow: var(--tech-glow);
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .btn-login:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--tech-glow-hover);
+    }
+
+    .user-profile-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid var(--card-border);
+      padding: 4px 12px 4px 5px;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 4px 12px rgba(8, 145, 178, 0.06);
+    }
+
+    .user-avatar-circle {
+      width: 32px;
+      height: 32px;
+      background: var(--tech-gradient);
+      color: #FFFFFF;
+      font-weight: 800;
+      font-size: 14px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+      box-shadow: 0 2px 8px rgba(6, 182, 212, 0.3);
+    }
+
+    .user-info-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-greeting {
+      font-size: 10px;
+      color: var(--text-light);
+      line-height: 1;
+      font-weight: 600;
+    }
+
+    .user-name-display {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .btn-logout-icon {
+      background: transparent;
+      border: none;
+      color: var(--text-light);
+      cursor: pointer;
+      font-size: 13px;
+      padding: 6px;
+      border-radius: 50%;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-logout-icon:hover {
+      color: #EF4444;
+      background: #FEE2E2;
+      transform: scale(1.15);
+    }
+
+    /* ================= 3. HERO MOVIE DETAIL CARD ================= */
+    .detail-wrapper {
+      max-width: 1360px;
+      width: 100%;
+      margin: 106px auto 36px;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .detail-card-glass {
+      background: var(--card-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--card-shadow);
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      gap: 46px;
+      align-items: flex-start;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .detail-card-glass:hover {
+      box-shadow: var(--card-shadow-hover);
+      border-color: var(--card-border-hover);
+    }
+
+    /* Hiệu ứng tia sáng công nghệ ở nền thẻ */
+    .detail-card-glass::after {
+      content: '';
+      position: absolute;
+      top: -120px;
+      right: -120px;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.18) 0%, rgba(79, 70, 229, 0.05) 70%, transparent 100%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    /* Poster Frame with Tech Glow */
+    .poster-frame {
+      position: relative;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 2px solid var(--card-border);
+      box-shadow: 0 12px 28px rgba(8, 145, 178, 0.15), 0 0 20px rgba(6, 182, 212, 0.2);
+      aspect-ratio: 2/3;
+      background: #E0F2FE;
+    }
+
+    .poster-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .poster-frame:hover img {
+      transform: scale(1.04);
+    }
+
+    /* Info Column */
+    .info-column {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tech-badges-list {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .tech-pill-tag {
+      background: rgba(6, 182, 212, 0.12);
+      border: 1px solid rgba(6, 182, 212, 0.35);
+      color: #0284C7;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tech-pill-rating {
+      background: #FEF3C7;
+      border: 1px solid #FCD34D;
+      color: #B45309;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      font-size: 12px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .tech-pill-info {
+      background: #FFFFFF;
+      border: 1px solid var(--card-border);
+      color: var(--text-sub);
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .movie-headline {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 900;
+      line-height: 1.18;
+      color: var(--text-main);
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+
+    /* Genre tags */
+    .genres-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+
+    .genre-chip {
+      background: #FFFFFF;
+      border: 1px solid var(--card-border);
+      color: var(--tech-indigo);
+      padding: 5px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 2px 6px rgba(8, 145, 178, 0.04);
+      transition: var(--transition);
+    }
+
+    .genre-chip:hover {
+      border-color: var(--tech-cyan);
+      background: #E0F2FE;
+    }
+
+    .summary-heading {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 800;
+      color: var(--tech-cyan);
+      margin-bottom: 8px;
+    }
+
+    .movie-synopsis {
+      font-size: 14.5px;
+      line-height: 1.7;
+      color: var(--text-sub);
+      margin-bottom: 28px;
+    }
+
+    /* Meta grid */
+    .meta-tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid var(--card-border);
+      padding: 16px 20px;
+      border-radius: var(--radius-md);
+      margin-bottom: 30px;
+    }
+
+    .meta-cell-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-light);
+      margin-bottom: 4px;
+    }
+
+    .meta-cell-value {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    /* Action buttons */
+    .actions-cluster {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-watch-primary {
+      background: var(--tech-gradient);
+      color: #FFFFFF;
+      border: none;
+      padding: 14px 34px;
+      border-radius: var(--radius-pill);
+      font-size: 14.5px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--tech-glow);
+      transition: var(--transition);
+      text-decoration: none;
+    }
+
+    .btn-watch-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--tech-glow-hover);
+    }
+
+    .btn-action-ghost {
+      background: #FFFFFF;
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 14px 22px;
+      border-radius: var(--radius-pill);
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+      box-shadow: 0 2px 8px rgba(8, 145, 178, 0.05);
+    }
+
+    .btn-action-ghost:hover {
+      border-color: var(--tech-cyan);
+      color: var(--tech-indigo);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(6, 182, 212, 0.15);
+    }
+
+    /* ================= 4. FUTURISTIC VIDEO PLAYER SECTION ================= */
+    .player-zone {
+      max-width: 1360px;
+      width: 100%;
+      margin: 0 auto 40px;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .player-wrapper-glass {
+      background: var(--card-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--card-shadow);
+      padding: 30px;
+    }
+
+    .section-headline-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .section-heading-text {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-heading-text i {
+      color: var(--tech-cyan);
+    }
+
+    .server-status-pill {
+      background: #ECFDF5;
+      border: 1px solid #A7F3D0;
+      color: #065F46;
+      padding: 5px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      box-shadow: 0 0 10px var(--accent-green);
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.6; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.2); }
+      100% { opacity: 0.6; transform: scale(0.9); }
+    }
+
+    /* Video Canvas Frame */
+    .video-canvas-container {
+      background: #020617;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 2px solid var(--card-border);
+      box-shadow: 0 16px 36px rgba(8, 145, 178, 0.16);
+      aspect-ratio: 16/9;
+      width: 100%;
+      position: relative;
+    }
+
+    .video-canvas-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      outline: none;
+    }
+
+    /* Tech Player Control Hub */
+    .player-hub-controls {
+      margin-top: 20px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 16px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .hub-cluster {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .cluster-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-right: 4px;
+    }
+
+    .hub-chip-btn {
+      background: #FFFFFF;
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .hub-chip-btn:hover {
+      border-color: var(--tech-cyan);
+      color: var(--tech-cyan);
+    }
+
+    .hub-chip-btn.active {
+      background: var(--tech-gradient);
+      color: #FFFFFF;
+      border-color: transparent;
+      box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+    }
+
+    /* ================= 5. COMMENTS SECTION ================= */
+    .comments-zone {
+      max-width: 1360px;
+      width: 100%;
+      margin: 0 auto 40px;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .comments-wrapper-glass {
+      background: var(--card-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--card-shadow);
+      padding: 36px;
+    }
+
+    .comment-locked-alert {
+      background: rgba(255, 255, 255, 0.7);
+      border: 1.5px dashed var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .comment-locked-alert p {
+      color: var(--text-sub);
+      font-size: 14.5px;
+      margin-bottom: 14px;
+      font-weight: 500;
+    }
+
+    .comment-active-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 34px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .active-user-meta-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .user-tagline {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .star-rating-selector {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .star-rating-selector span {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-light);
+      margin-right: 4px;
+    }
+
+    .star-pick-btn {
+      background: none;
+      border: none;
+      color: #CBD5E1;
+      font-size: 19px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .star-pick-btn.active,
+    .star-pick-btn:hover {
+      color: var(--accent-gold);
+      transform: scale(1.2);
+    }
+
+    .comment-input-area {
+      width: 100%;
+      height: 100px;
+      background: #FFFFFF;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      color: var(--text-main);
+      font-size: 14px;
+      outline: none;
+      resize: vertical;
+      transition: var(--transition);
+    }
+
+    .comment-input-area:focus {
+      border-color: var(--tech-cyan);
+      box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.15);
+    }
+
+    .btn-send-comment {
+      align-self: flex-end;
+      background: var(--tech-gradient);
+      color: #FFFFFF;
+      border: none;
+      padding: 11px 26px;
+      border-radius: var(--radius-pill);
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: var(--tech-glow);
+      transition: var(--transition);
+    }
+
+    .btn-send-comment:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--tech-glow-hover);
+    }
+
+    /* Comments stream list */
+    .comments-stream-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .comment-bubble {
+      display: flex;
+      gap: 16px;
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid var(--card-border);
+      padding: 18px 20px;
+      border-radius: var(--radius-md);
+      transition: var(--transition);
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .comment-bubble:hover {
+      background: #FFFFFF;
+      border-color: var(--tech-cyan);
+    }
+
+    .comment-author-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--tech-gradient);
+      color: #FFFFFF;
+      font-weight: 800;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(6, 182, 212, 0.3);
+    }
+
+    .comment-inner-content {
+      flex: 1;
+    }
+
+    .comment-row-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .comment-author-name {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .comment-timestamp {
+      font-size: 11px;
+      color: var(--text-light);
+      font-weight: 600;
+    }
+
+    .comment-stars-row {
+      color: var(--accent-gold);
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .comment-body-text {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: var(--text-sub);
+    }
+
+    /* ================= 6. RECOMMENDED MOVIES GRID ================= */
+    .recommended-zone {
+      max-width: 1360px;
+      width: 100%;
+      margin: 0 auto 60px;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .rec-grid-layout {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .rec-movie-card {
+      background: var(--card-glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--card-border);
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .rec-movie-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--tech-cyan);
+      box-shadow: var(--card-shadow-hover);
+    }
+
+    .rec-poster-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 2/3;
+      overflow: hidden;
+      background: #E0F2FE;
+    }
+
+    .rec-poster-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .rec-movie-card:hover .rec-poster-wrap img {
+      transform: scale(1.06);
+    }
+
+    .rec-rating-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: var(--radius-pill);
+      padding: 3px 10px;
+      font-size: 11.5px;
+      font-weight: 800;
+      color: #B45309;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .rec-rating-badge i {
+      color: var(--accent-gold);
+    }
+
+    .rec-info-wrap {
+      padding: 14px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      justify-content: space-between;
+    }
+
+    .rec-genre-text {
+      color: var(--tech-cyan);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 4px;
+    }
+
+    .rec-title-text {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .rec-movie-card:hover .rec-title-text {
+      color: var(--tech-indigo);
+    }
+
+    /* ================= 7. TOAST NOTIFICATION ================= */
+    #toast-container {
+      position: fixed;
+      top: 90px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .toast-item {
+      pointer-events: auto;
+      min-width: 300px;
+      background: #FFFFFF;
+      border-left: 4px solid var(--tech-cyan);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 12px 30px rgba(8, 145, 178, 0.16);
+      transform: translateX(120%);
+      transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .toast-item.show {
+      transform: translateX(0);
+    }
+
+    .toast-icon {
+      font-size: 18px;
+      color: var(--accent-green);
+    }
+
+    .toast-message {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* ================= 8. FOOTER ================= */
+    .footer {
+      background: rgba(235, 246, 248, 0.95);
+      border-top: 1px solid var(--nav-border);
+      padding: 50px 24px 30px;
+      margin-top: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-container {
+      max-width: 1360px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      color: var(--text-sub);
+      font-size: 13px;
+    }
+
+    /* ================= 9. RESPONSIVE DESIGN ================= */
+    @media (max-width: 1024px) {
+      .detail-card-glass {
+        grid-template-columns: 1fr;
+        padding: 30px;
+      }
+      .poster-frame {
+        max-width: 280px;
+        margin: 0 auto;
+      }
+      .rec-grid-layout {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 680px) {
+      .nav-links {
+        display: none;
+      }
+      .detail-card-glass {
+        padding: 24px 18px;
+      }
+      .rec-grid-layout {
+        grid-template-columns: 1fr;
+      }
+      .player-wrapper-glass,
+      .comments-wrapper-glass {
+        padding: 20px 16px;
+      }
+      .footer-container {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= 1. STICKY HIGH-TECH NAVBAR ================= -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">
+          <i class="fa-solid fa-play"></i>
+        </div>
+        <span>MINDX <span>CINEMA</span></span>
+      </a>
+
+      <!-- Menu links -->
+      <ul class="nav-links">
+        <li><a href="index.html">Trang Chủ</a></li>
+        <li><a href="index.html#movies-section">Phim Nổi Bật</a></li>
+        <li><a href="search.html">Tìm Kiếm</a></li>
+      </ul>
+
+      <!-- Actions & Auth Box -->
+      <div class="nav-actions">
+        <a href="index.html" class="btn-nav-back">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Trang Chủ</span>
+        </a>
+
+        <!-- Auth State Container -->
+        <div class="auth-state-box" id="authStateBox">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ================= 2. HERO MOVIE DETAIL CARD ================= -->
+  <main class="detail-wrapper">
+    <div class="detail-card-glass">
+      
+      <!-- Poster with Tech Glow Frame -->
+      <div class="poster-frame">
+        <img id="moviePoster" src="" alt="Poster Phim">
+      </div>
+
+      <!-- Info Column -->
+      <div class="info-column">
+        
+        <div class="tech-badges-list">
+          <span class="tech-pill-tag"><i class="fa-solid fa-bolt"></i> Siêu Phẩm HD</span>
+          <span class="tech-pill-rating" id="movieRating"><i class="fa-solid fa-star"></i> -- IMDb</span>
+          <span class="tech-pill-info" id="movieYear"><i class="fa-regular fa-calendar"></i> ----</span>
+          <span class="tech-pill-info" id="movieRuntime"><i class="fa-regular fa-clock"></i> -- phút</span>
+          <span class="tech-pill-info" id="movieStatus"><i class="fa-solid fa-circle-check"></i> Đang Chiếu</span>
+        </div>
+
+        <h1 class="movie-headline" id="movieTitle">Đang nạp dữ liệu phim...</h1>
+
+        <!-- Genre tags cloud -->
+        <div class="genres-cloud" id="movieGenres"></div>
+
+        <div class="summary-heading">Nội Dung Chi Tiết</div>
+        <p class="movie-synopsis" id="movieSummary">Hệ thống đang truy xuất dữ liệu từ máy chủ TVMaze...</p>
+
+        <!-- Meta tech cells -->
+        <div class="meta-tech-grid">
+          <div>
+            <div class="meta-cell-label">Âm Thanh</div>
+            <div class="meta-cell-value">Dolby Atmos 7.1</div>
+          </div>
+          <div>
+            <div class="meta-cell-label">Độ Phân Giải</div>
+            <div class="meta-cell-value" style="color: var(--tech-indigo);">4K Ultra HD 60fps</div>
+          </div>
+          <div>
+            <div class="meta-cell-label">Bản Quyền</div>
+            <div class="meta-cell-value">MindX Exclusive</div>
+          </div>
+        </div>
+
+        <!-- Action cluster -->
+        <div class="actions-cluster">
+          <a href="#videoPlayerZone" class="btn-watch-primary">
+            <i class="fa-solid fa-play"></i> Xem Phim Ngay
+          </a>
+          <button class="btn-action-ghost" onclick="toggleBookmark()">
+            <i class="fa-regular fa-bookmark" id="bookmarkIcon"></i> Lưu Bộ Phim
+          </button>
+          <button class="btn-action-ghost" onclick="copyMovieLink()">
+            <i class="fa-solid fa-share-nodes"></i> Chia Sẻ
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ================= 3. FUTURISTIC VIDEO PLAYER ================= -->
+  <section class="player-zone" id="videoPlayerZone">
+    <div class="player-wrapper-glass">
+      
+      <div class="section-headline-bar">
+        <h2 class="section-heading-text">
+          <i class="fa-solid fa-display"></i> Trình Chiếu Phim Trực Tuyến
+        </h2>
+        <div class="server-status-pill">
+          <span class="status-pulse-dot"></span>
+          <span id="activeServerText">Máy chủ: Server #1 VIP (Ultra HD)</span>
+        </div>
+      </div>
+
+      <!-- Video Canvas -->
+      <div class="video-canvas-container">
+        <video id="cinemaVideoPlayer" controls preload="metadata" poster="">
+          <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+          Trình duyệt của bạn không hỗ trợ thẻ video HTML5.
+        </video>
+      </div>
+
+      <!-- Tech Hub Controls -->
+      <div class="player-hub-controls">
+        
+        <!-- Chọn Máy Chủ -->
+        <div class="hub-cluster">
+          <span class="cluster-label">Máy Chủ:</span>
+          <button class="hub-chip-btn active" onclick="switchServer(this, 'Server #1 VIP (Ultra HD)')">Server #1 VIP</button>
+          <button class="hub-chip-btn" onclick="switchServer(this, 'Server #2 4K (Dự Phòng)')">Server #2 4K</button>
+        </div>
+
+        <!-- Chọn Tập Phim -->
+        <div class="hub-cluster">
+          <span class="cluster-label">Tập:</span>
+          <button class="hub-chip-btn active" onclick="switchEpisode(this, 'Tập 1')">Tập 1</button>
+          <button class="hub-chip-btn" onclick="switchEpisode(this, 'Tập 2')">Tập 2</button>
+          <button class="hub-chip-btn" onclick="switchEpisode(this, 'Tập 3')">Tập 3</button>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 4. COMMENTS SECTION ================= -->
+  <section class="comments-zone">
+    <div class="comments-wrapper-glass">
+      
+      <div class="section-headline-bar">
+        <h2 class="section-heading-text">
+          <i class="fa-solid fa-comments"></i> Thảo Luận & Đánh Giá (<span id="commentsCountText">0</span>)
+        </h2>
+      </div>
+
+      <!-- Khung Viết Bình Luận (Thay đổi theo trạng thái Đăng nhập) -->
+      <div id="commentFormContainer">
+        <!-- Rendered via JS -->
+      </div>
+
+      <!-- Danh Sách Bình Luận -->
+      <div class="comments-stream-list" id="commentsStreamList">
+        <!-- Rendered via JS -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 5. RECOMMENDED MOVIES ================= -->
+  <section class="recommended-zone">
+    <div class="section-headline-bar">
+      <h2 class="section-heading-text">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> Phim Đề Xuất Liên Quan
+      </h2>
+    </div>
+
+    <div class="rec-grid-layout" id="recMoviesGrid">
+      <!-- 4 phim đề xuất qua JS -->
+    </div>
+  </section>
+
+  <!-- ================= 6. FOOTER ================= -->
+  <footer class="footer">
+    <div class="footer-container">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">
+          <i class="fa-solid fa-play"></i>
+        </div>
+        <span>MINDX <span>CINEMA</span></span>
+      </a>
+      <p>© 2026 MindX Cinema. Giao diện Sáng Công Nghệ Cao (High-Tech Cyan-Indigo Light).</p>
+    </div>
+  </footer>
+
+  <!-- Toast Box -->
+  <div id="toast-container"></div>
+
+  <!-- ================= 7. JAVASCRIPT LOGIC ================= -->
+  <script>
+    /* ================= DỮ LIỆU DỰ PHÒNG CHO DETAIL ================= */
+    const FALLBACK_DETAIL = {
+      id: 1,
+      name: "Under the Dome",
+      rating: { average: 7.9 },
+      genres: ["Drama", "Science-Fiction", "Thriller"],
+      premiered: "2013-06-24",
+      runtime: 60,
+      status: "Ended",
+      image: {
+        original: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80"
+      },
+      summary: "Một thị trấn nhỏ tại Chester's Mill bất ngờ bị cô lập hoàn toàn bởi một mái vòm vô hình kiên cố, khơi mào cho chuỗi biến cố sinh tồn đầy kịch tính."
+    };
+
+    const FALLBACK_RECOMMENDED = [
+      { id: 2, name: "Person of Interest", rating: 8.5, genres: ["Action", "Crime"], image: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80" },
+      { id: 3, name: "Bitten", rating: 7.6, genres: ["Drama", "Horror"], image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80" },
+      { id: 4, name: "Arrow", rating: 8.2, genres: ["Action", "Adventure"], image: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=600&q=80" },
+      { id: 5, name: "True Detective", rating: 8.9, genres: ["Drama", "Crime"], image: "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=600&q=80" }
+    ];
+
+    /* ================= QUẢN LÝ XÁC THỰC NGƯỜI DÙNG ================= */
+    const STORAGE_KEY_CURRENT_USER = 'mindx_current_user';
+    let currentUser = null;
+
+    function checkAuthState() {
+      const authBox = document.getElementById('authStateBox');
+      const currentUserJSON = localStorage.getItem(STORAGE_KEY_CURRENT_USER);
+
+      if (currentUserJSON) {
+        try {
+          currentUser = JSON.parse(currentUserJSON);
+          const firstLetter = (currentUser.fullname || currentUser.email || 'U').charAt(0).toUpperCase();
+
+          authBox.innerHTML = `
+            <div class="user-profile-badge">
+              <div class="user-avatar-circle">${firstLetter}</div>
+              <div class="user-info-text">
+                <span class="user-greeting">Xin chào,</span>
+                <span class="user-name-display" title="${currentUser.fullname}">${currentUser.fullname || 'Thành viên'}</span>
+              </div>
+              <button class="btn-logout-icon" onclick="handleLogout()" title="Đăng xuất tài khoản">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              </button>
+            </div>
+          `;
+        } catch (e) {
+          localStorage.removeItem(STORAGE_KEY_CURRENT_USER);
+          currentUser = null;
+          renderLoginButton(authBox);
+        }
+      } else {
+        currentUser = null;
+        renderLoginButton(authBox);
+      }
+
+      renderCommentForm();
+    }
+
+    function renderLoginButton(container) {
+      container.innerHTML = `
+        <a href="login.html" class="btn-login">
+          <i class="fa-solid fa-user"></i>
+          <span>Đăng nhập / Đăng ký</span>
+        </a>
+      `;
+    }
+
+    function handleLogout() {
+      localStorage.removeItem(STORAGE_KEY_CURRENT_USER);
+      showToast('Đã đăng xuất tài khoản thành công!');
+      checkAuthState();
+    }
+
+    /* ================= TOAST NOTIFICATION ================= */
+    function showToast(message) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast-item';
+
+      toast.innerHTML = `
+        <i class="fa-solid fa-circle-check toast-icon"></i>
+        <span class="toast-message">${message}</span>
+      `;
+
+      container.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 10);
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 400);
+      }, 3500);
+    }
+
+    /* ================= TẢI CHI TIẾT PHIM TỪ API ================= */
+    let currentMovieId = 1;
+
+    async function loadMovieDetails() {
+      const urlParams = new URLSearchParams(window.location.search);
+      currentMovieId = urlParams.get('id') || 1;
+
+      let movieData = null;
+
+      try {
+        const response = await fetch(`https://api.tvmaze.com/shows/${currentMovieId}`);
+        if (!response.ok) throw new Error('Không thể tải chi tiết');
+        movieData = await response.json();
+      } catch (err) {
+        console.warn('Lỗi kết nối API, sử dụng dữ liệu dự phòng:', err);
+        movieData = FALLBACK_DETAIL;
+      }
+
+      renderMovieUI(movieData);
+      loadComments(currentMovieId);
+      loadRecommendedMovies();
+    }
+
+    function renderMovieUI(movie) {
+      document.title = `${movie.name} | MindX Cinema - High-Tech Edition`;
+
+      const posterImg = movie.image?.original || movie.image?.medium || 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80';
+      document.getElementById('moviePoster').src = posterImg;
+      document.getElementById('cinemaVideoPlayer').poster = posterImg;
+
+      document.getElementById('movieTitle').innerText = movie.name;
+      document.getElementById('movieRating').innerHTML = `<i class="fa-solid fa-star"></i> ${movie.rating?.average || 8.0} IMDb`;
+      document.getElementById('movieYear').innerHTML = `<i class="fa-regular fa-calendar"></i> ${movie.premiered ? movie.premiered.split('-')[0] : '2024'}`;
+      document.getElementById('movieRuntime').innerHTML = `<i class="fa-regular fa-clock"></i> ${movie.runtime || 60} phút`;
+      document.getElementById('movieStatus').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${movie.status || 'Hoàn tất'}`;
+
+      // Xóa thẻ HTML khỏi tóm tắt
+      const cleanSummary = movie.summary ? movie.summary.replace(/<[^>]*>?/gm, '') : 'Một bộ phim bom tấn đỉnh cao với kịch bản cuốn hút và kỹ xảo tân tiến.';
+      document.getElementById('movieSummary').innerText = cleanSummary;
+
+      // Thể loại
+      const genresContainer = document.getElementById('movieGenres');
+      genresContainer.innerHTML = '';
+      const list = (movie.genres && movie.genres.length > 0) ? movie.genres : ['Khoa Học Viễn Tưởng', 'Hành Động'];
+      list.forEach(genre => {
+        const span = document.createElement('span');
+        span.className = 'genre-chip';
+        span.innerText = genre;
+        genresContainer.appendChild(span);
+      });
+    }
+
+    /* ================= TRÌNH PHÁT VIDEO: SERVER & TẬP ================= */
+    function switchServer(btn, serverName) {
+      document.querySelectorAll('.hub-chip-btn').forEach(b => {
+        if (b.innerText.includes('Server')) b.classList.remove('active');
+      });
+      btn.classList.add('active');
+      document.getElementById('activeServerText').innerText = `Máy chủ: ${serverName}`;
+      showToast(`Đã chuyển sang ${serverName}!`);
+    }
+
+    function switchEpisode(btn, epName) {
+      document.querySelectorAll('.hub-chip-btn').forEach(b => {
+        if (b.innerText.includes('Tập')) b.classList.remove('active');
+      });
+      btn.classList.add('active');
+      const video = document.getElementById('cinemaVideoPlayer');
+      video.currentTime = 0;
+      video.play().catch(() => {});
+      showToast(`Đang phát ${epName}...`);
+    }
+
+    /* ================= HỆ THỐNG BÌNH LUẬN (LOCALSTORAGE) ================= */
+    let selectedStars = 5;
+
+    function renderCommentForm() {
+      const formContainer = document.getElementById('commentFormContainer');
+
+      if (!currentUser) {
+        formContainer.innerHTML = `
+          <div class="comment-locked-alert">
+            <p><i class="fa-solid fa-lock" style="color: var(--tech-cyan); margin-right: 6px;"></i> Vui lòng đăng nhập tài khoản để tham gia thảo luận và đánh giá về bộ phim này.</p>
+            <a href="login.html" class="btn-login" style="display: inline-flex;">
+              <i class="fa-solid fa-right-to-bracket"></i> Đăng nhập ngay
+            </a>
+          </div>
+        `;
+      } else {
+        const firstLetter = (currentUser.fullname || 'U').charAt(0).toUpperCase();
+        formContainer.innerHTML = `
+          <form class="comment-active-form" onsubmit="handleSendComment(event)">
+            <div class="active-user-meta-bar">
+              <div class="user-tagline">
+                <div class="user-avatar-circle" style="width: 34px; height: 34px; font-size: 13px;">${firstLetter}</div>
+                <span>${currentUser.fullname}</span>
+              </div>
+              <div class="star-rating-selector">
+                <span>Đánh giá:</span>
+                <button type="button" class="star-pick-btn active" onclick="setRatingStars(1)"><i class="fa-solid fa-star"></i></button>
+                <button type="button" class="star-pick-btn active" onclick="setRatingStars(2)"><i class="fa-solid fa-star"></i></button>
+                <button type="button" class="star-pick-btn active" onclick="setRatingStars(3)"><i class="fa-solid fa-star"></i></button>
+                <button type="button" class="star-pick-btn active" onclick="setRatingStars(4)"><i class="fa-solid fa-star"></i></button>
+                <button type="button" class="star-pick-btn active" onclick="setRatingStars(5)"><i class="fa-solid fa-star"></i></button>
+              </div>
+            </div>
+
+            <textarea id="commentInputText" class="comment-input-area" placeholder="Để lại cảm nghĩ của bạn về bộ phim này..." required></textarea>
+            
+            <button type="submit" class="btn-send-comment">
+              <i class="fa-solid fa-paper-plane"></i> Gửi Bình Luận
+            </button>
+          </form>
+        `;
+      }
+    }
+
+    function setRatingStars(stars) {
+      selectedStars = stars;
+      const btns = document.querySelectorAll('.star-pick-btn');
+      btns.forEach((btn, idx) => {
+        if (idx < stars) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+    }
+
+    function loadComments(movieId) {
+      const storageKey = `mindx_comments_${movieId}`;
+      let comments = JSON.parse(localStorage.getItem(storageKey));
+
+      if (!comments || comments.length === 0) {
+        comments = [
+          {
+            id: 1,
+            author: "Nguyễn Hải Đăng",
+            rating: 5,
+            content: "Kỹ xảo hình ảnh và âm thanh vô cùng mãn nhãn! Một tác phẩm khoa học viễn tưởng đáng xem nhất năm.",
+            createdAt: "3 giờ trước"
+          },
+          {
+            id: 2,
+            author: "Phạm Phương Linh",
+            rating: 4,
+            content: "Nhịp phim dồn dập, diễn xuất diễn viên chính rất thuyết phục. Chất lượng video 4K chạy rất mượt.",
+            createdAt: "Hôm qua"
+          }
+        ];
+        localStorage.setItem(storageKey, JSON.stringify(comments));
+      }
+
+      document.getElementById('commentsCountText').innerText = comments.length;
+
+      const listContainer = document.getElementById('commentsStreamList');
+      listContainer.innerHTML = comments.map(c => `
+        <div class="comment-bubble">
+          <div class="comment-author-avatar">${c.author.charAt(0).toUpperCase()}</div>
+          <div class="comment-inner-content">
+            <div class="comment-row-top">
+              <span class="comment-author-name">${c.author}</span>
+              <span class="comment-timestamp">${c.createdAt}</span>
+            </div>
+            <div class="comment-stars-row">
+              ${'<i class="fa-solid fa-star"></i>'.repeat(c.rating)}
+              ${'<i class="fa-regular fa-star"></i>'.repeat(5 - c.rating)}
+            </div>
+            <p class="comment-body-text">${c.content}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function handleSendComment(e) {
+      e.preventDefault();
+      const input = document.getElementById('commentInputText');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const storageKey = `mindx_comments_${currentMovieId}`;
+      const comments = JSON.parse(localStorage.getItem(storageKey)) || [];
+
+      const newComment = {
+        id: Date.now(),
+        author: currentUser.fullname || 'Thành viên MindX',
+        rating: selectedStars,
+        content: text,
+        createdAt: "Vừa xong"
+      };
+
+      comments.unshift(newComment);
+      localStorage.setItem(storageKey, JSON.stringify(comments));
+
+      input.value = '';
+      loadComments(currentMovieId);
+      showToast('Đã gửi bình luận thành công!');
+    }
+
+    /* ================= PHIM ĐỀ XUẤT LIÊN QUAN ================= */
+    async function loadRecommendedMovies() {
+      const grid = document.getElementById('recMoviesGrid');
+      let recs = [];
+
+      try {
+        const res = await fetch('https://api.tvmaze.com/shows?page=1');
+        if (res.ok) {
+          const list = await res.json();
+          recs = list.filter(m => m.id != currentMovieId && m.image?.original).slice(0, 4);
+        }
+      } catch (e) {
+        recs = FALLBACK_RECOMMENDED;
+      }
+
+      if (recs.length === 0) recs = FALLBACK_RECOMMENDED;
+
+      grid.innerHTML = recs.map(movie => `
+        <a href="detail.html?id=${movie.id}" class="rec-movie-card">
+          <div class="rec-poster-wrap">
+            <span class="rec-rating-badge"><i class="fa-solid fa-star"></i> ${movie.rating?.average || 8.0}</span>
+            <img src="${movie.image?.original || movie.image}" alt="${movie.name}">
+          </div>
+          <div class="rec-info-wrap">
+            <span class="rec-genre-text">${(movie.genres || ['Điện Ảnh']).slice(0, 2).join(' • ')}</span>
+            <h3 class="rec-title-text">${movie.name}</h3>
+          </div>
+        </a>
+      `).join('');
+    }
+
+    /* ================= TƯƠNG TÁC PHỤ TRỢ ================= */
+    function toggleBookmark() {
+      const icon = document.getElementById('bookmarkIcon');
+      if (icon.classList.contains('fa-regular')) {
+        icon.classList.remove('fa-regular');
+        icon.classList.add('fa-solid');
+        icon.style.color = 'var(--tech-cyan)';
+        showToast('Đã lưu phim vào danh sách Yêu Thích!');
+      } else {
+        icon.classList.remove('fa-solid');
+        icon.classList.add('fa-regular');
+        icon.style.color = '';
+        showToast('Đã xóa phim khỏi danh sách Yêu Thích!');
+      }
+    }
+
+    function copyMovieLink() {
+      navigator.clipboard.writeText(window.location.href);
+      showToast('Đã sao chép liên kết phim vào bộ nhớ tạm!');
+    }
+
+    /* Hiệu ứng Header khi cuộn trang */
+    window.addEventListener('scroll', () => {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 40) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    /* ================= KHỞI CHẠY ================= */
+    document.addEventListener('DOMContentLoaded', () => {
+      checkAuthState();
+      loadMovieDetails();
+    });
+  </script>
+
+</body>
+</html>
